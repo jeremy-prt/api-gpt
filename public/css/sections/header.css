@@ -23,9 +23,8 @@ header nav .logo {
 }
 
 header nav .logo img {
-  width: 40px;
-  height: 40px;
-  transition: 0.3s ease-in-out;
+  width: 35px;
+  transition: 0.3s ease-out;
 }
 
 header nav .logo:hover img {

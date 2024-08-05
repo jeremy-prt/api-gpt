@@ -1,0 +1,112 @@
+.api {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 60px;
+  padding-bottom: 200px; /* à retirer */
+}
+
+.api .title h1 {
+  font-size: 52px;
+  font-weight: 600;
+  color: hsl(var(--text));
+  line-height: 88px;
+  text-align: center;
+}
+
+.api .grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.api .grid form {
+  position: relative;
+}
+
+.api .grid form .text {
+  position: relative;
+}
+
+.api .grid form .text textarea {
+  background: transparent;
+  border-bottom: 1px solid hsl(var(--accent)) !important;
+  resize: none;
+  display: block;
+  width: 100%;
+  border: none;
+  font-family: var(--font);
+  font-size: 16px;
+}
+.api .grid form .text textarea:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.text .bar {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.text .bar:before,
+.text .bar:after {
+  content: "";
+  height: 2px;
+  width: 0;
+  bottom: 1px;
+  position: absolute;
+  background: hsl(var(--accent));
+  transition: 0.2s ease all;
+  -moz-transition: 0.2s ease all;
+  -webkit-transition: 0.2s ease all;
+}
+
+.text .bar:before {
+  left: 50%;
+}
+
+.text .bar:after {
+  right: 50%;
+}
+
+.text textarea:focus ~ .bar:before,
+.text textarea:focus ~ .bar:after {
+  width: 50%;
+}
+
+.api form button {
+  padding: 8px 32px;
+  border-radius: 8px;
+  color: hsl(var(--text));
+  text-decoration: none;
+  line-height: 36px;
+  transition: 0.3s;
+  border: none;
+  font-size: 16px;
+  background: hsl(var(--primary));
+  position: absolute;
+  left: 0;
+  bottom: -70px;
+  cursor: pointer;
+}
+
+.api form button:hover {
+  box-shadow: 0 20px 80px -10px hsl(var(--primary));
+}
+
+.api .grid .result {
+  width: 100%;
+  height: 100%;
+  background: hsla(var(--secondary), 0.3);
+  position: relative;
+  padding: 20px;
+}
+
+.api .grid .result #defaultText {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

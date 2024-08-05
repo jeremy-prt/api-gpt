@@ -3,6 +3,7 @@
 @import url(sections/header.css);
 @import url(sections/hero.css);
 @import url(sections/features.css);
+@import url(sections/api.css);
 
 :root {
   --font: "Poppins", sans-serif;

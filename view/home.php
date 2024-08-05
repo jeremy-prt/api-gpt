@@ -15,12 +15,13 @@
     <header>
       <nav>
         <a href="home.html" class="logo">
-          <img src="../public/assets/logo.png" alt="Logo" />
+          <img src="../public/assets/logo.svg" alt="Logo" />
           <p href="home.html">Api GPT</p>
         </a>
         <ul>
           <li><a href="home.html">Accueil</a></li>
-          <li><a href="about.html">A propos</a></li>
+          <li><a href="#">Dépôt github</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
       </nav>
     </header>
@@ -65,10 +66,44 @@
               réfléchir à la structure de votre texte.
             </p>
           </div>
-          <div class="card"></div>
-          <div class="card"></div>
+          <div class="card">
+            <!-- prettier-ignore -->
+            <svg width="178" height="89" viewBox="0 0 178 89" fill="none" xmlns="http://www.w3.org/2000/svg" class="section-card-img" data-astro-cid-j7pv25f6=""> <rect y="26" width="154" height="63" rx="5" fill="hsl(var(--accent))" fill-opacity="0.6" data-astro-cid-j7pv25f6=""></rect> <path d="M142 16L142 4" stroke="hsl(var(--text))" stroke-width="8" stroke-linecap="round" data-astro-cid-j7pv25f6=""></path> <path d="M163 34H174" stroke="var(--text)" stroke-width="8" stroke-linecap="round" data-astro-cid-j7pv25f6=""></path> <path d="M158 19L168 9" stroke="hsl(var(--text))" stroke-width="8" stroke-linecap="round" data-astro-cid-j7pv25f6=""></path> <path d="M62 57L73.5 68L94.5 47" stroke="hsl(var(--text))" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-j7pv25f6=""></path> </svg>
+            <h2>C'est simple</h2>
+            <p>Il suffit de renseigner votre texte et le tour est joué.</p>
+          </div>
+          <div class="card">
+            <!-- prettier-ignore -->
+            <svg width="112" height="114" viewBox="0 0 112 114" fill="none" xmlns="http://www.w3.org/2000/svg" class="section-card-img" data-astro-cid-j7pv25f6=""> <rect width="58" height="58" rx="5" fill="hsl(var(--background))" data-astro-cid-j7pv25f6=""></rect> <rect x="69" y="25" width="33" height="33" rx="5" fill="hsl(var(--accent))" fill-opacity="0.6" data-astro-cid-j7pv25f6=""></rect> <rect x="69" y="71" width="43" height="43" rx="5" fill="hsl(var(--text))" fill-opacity="0.1" data-astro-cid-j7pv25f6=""></rect> <rect x="20" y="70" width="38" height="39" rx="5" fill="hsl(var(--text))" data-astro-cid-j7pv25f6=""></rect> </svg>
+            <h2>Intégration facile</h2>
+            <p>
+              Fournit également les données en format JSON, facilitant
+              l'intégration avec d'autres outils et applications.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section class="api">
+        <div class="title">
+          <h1>Tester notre outil</h1>
+        </div>
+        <div class="grid">
+          <form action="../public/index.php" method="POST" id="textForm">
+              <div class="text">
+                  <textarea required name="text" id="texte" rows="16" placeholder="Copier votre texte ici"></textarea>
+                  <span class="bar"></span>
+              </div>
+              <button type="submit">Résultat</button>
+          </form>
+          <div class="result">
+              <p id="defaultText">Le résultat va apparaitre ici.</p>
+              <p id="result"></p>
+              <p id="errorMessage" style="color: red; display: none;"></p>
+          </div>
+          <button id="downloadButton" style="display: none;">Télécharger le résultat en .txt</button>
         </div>
       </section>
     </main>
+    <script src="../public/js/script.js"></script>
   </body>
 </html>
