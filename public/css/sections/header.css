@@ -1,0 +1,68 @@
+header {
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0px 112px;
+  min-height: 60px;
+}
+
+header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+header nav .logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  text-decoration: none;
+  color: hsl(var(--text));
+  transition: 0.3s;
+}
+
+header nav .logo img {
+  width: 40px;
+  height: 40px;
+  transition: 0.3s ease-in-out;
+}
+
+header nav .logo:hover img {
+  transform: rotate(45deg);
+}
+
+header nav ul {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  gap: 32px;
+}
+
+header nav ul li a {
+  padding: 0px 4px;
+  position: relative;
+  text-decoration: none;
+  color: hsl(var(--text));
+  transition: 0.3s;
+}
+
+header nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1.5px;
+  background: hsl(var(--accent));
+  transition: width 0.3s;
+}
+
+header nav ul li a:hover::after {
+  width: 100%;
+}
+
+header nav ul li a:hover {
+  color: hsl(var(--accent));
+}

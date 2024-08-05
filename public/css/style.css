@@ -1,0 +1,14 @@
+@import url(https://fonts.googleapis.com/css?family=Poppins:100,100italic,200,200italic,300,300italic,regular,italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic);
+@import url(gloabal.css);
+@import url(sections/header.css);
+@import url(sections/hero.css);
+@import url(sections/features.css);
+
+:root {
+  --font: "Poppins", sans-serif;
+  --text: 192, 50%, 4%;
+  --background: 180, 20%, 99%;
+  --primary: 195, 44%, 55%;
+  --secondary: 229, 44%, 72%;
+  --accent: 241, 44%, 62%;
+}
