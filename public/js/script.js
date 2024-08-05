@@ -1,47 +1,40 @@
-// Ajoute un écouteur d'événement pour le formulaire avec l'ID "textForm" qui se déclenche lors de la soumission du formulaire
+// Ajoute un écouteur d'événement sur le formulaire pour intercepter la soumission
 document
   .getElementById("textForm")
   .addEventListener("submit", async function (event) {
-    // Empêche le comportement par défaut de la soumission du formulaire (rechargement de la page)
-    event.preventDefault();
+    event.preventDefault(); // Empêche le rechargement par défaut de la page lors de la soumission du formulaire
 
-    // Récupère le formulaire à partir de l'événement
-    const form = event.target;
-    // Crée un objet FormData à partir du formulaire, contenant tous les champs du formulaire
-    const formData = new FormData(form);
-    // Envoie une requête fetch au serveur avec les données du formulaire
+    const form = event.target; // Récupère le formulaire soumis
+    const formData = new FormData(form); // Crée un objet FormData avec les données du formulaire
+
+    // Envoie les données du formulaire au serveur en utilisant fetch
     const response = await fetch(form.action, {
       method: form.method,
       body: formData,
     });
 
-    // Vérifie si la réponse du serveur n'est pas correcte (code HTTP différent de 2xx)
+    // Vérifie si la réponse n'est pas OK, et log une erreur si c'est le cas
     if (!response.ok) {
       console.error("Error:", response.statusText);
-      return; // Arrête l'exécution si une erreur est survenue
+      return;
     }
 
-    // Récupère la réponse JSON du serveur
+    // Convertit la réponse en JSON
     const jsonResponse = await response.json();
 
-    // Si la réponse JSON contient une erreur
+    // Vérifie si la réponse contient une erreur et affiche le message d'erreur
     if (jsonResponse.error) {
-      // Masque le texte par défaut
       document.getElementById("defaultText").style.display = "none";
-      // Affiche le message d'erreur
       document.getElementById("errorMessage").style.display = "block";
       document.getElementById("errorMessage").textContent = jsonResponse.error;
-      // Vide le contenu du résultat
       document.getElementById("result").innerHTML = "";
-      // Cache le bouton de téléchargement
       document.getElementById("downloadButton").style.display = "none";
-      return; // Arrête l'exécution si une erreur est survenue
+      return;
     }
 
-    // Si aucune erreur, masque le texte par défaut et le message d'erreur
+    // Masque les messages par défaut et d'erreur, puis affiche le résultat formaté
     document.getElementById("defaultText").style.display = "none";
     document.getElementById("errorMessage").style.display = "none";
-    // Affiche le résultat formaté
     displayFormattedResult(
       jsonResponse.title,
       jsonResponse.genre,
@@ -49,23 +42,22 @@ document
       20 // Ajustez la vitesse ici (20 ms par caractère)
     );
 
-    // Affiche le bouton de téléchargement et lui attribue une action de clic pour télécharger le résultat
+    // Affiche le bouton de téléchargement et définit son comportement lors du clic
     document.getElementById("downloadButton").style.display = "block";
     document.getElementById("downloadButton").onclick = () =>
       downloadResult(jsonResponse);
   });
 
-// Fonction pour afficher le résultat formaté
+// Fonction pour afficher le résultat formaté avec effet de machine à écrire
 function displayFormattedResult(title, genre, summary, speed) {
   const resultElement = document.getElementById("result");
-  resultElement.innerHTML = ""; // Vide le contenu précédent du résultat
+  resultElement.innerHTML = ""; // Réinitialise le contenu du résultat
 
-  // Crée des éléments de paragraphe pour le titre, le genre et le résumé
+  // Crée et configure les éléments HTML pour le titre, le genre et le résumé
   const titleElement = document.createElement("p");
   const genreElement = document.createElement("p");
   const summaryElement = document.createElement("p");
 
-  // Remplit les éléments avec le contenu HTML
   titleElement.innerHTML =
     '<strong>Titre : </strong><span id="titleText"></span>';
   genreElement.innerHTML =
@@ -73,12 +65,12 @@ function displayFormattedResult(title, genre, summary, speed) {
   summaryElement.innerHTML =
     '<br><strong>Résumé : </strong><span id="summaryText"></span>';
 
-  // Ajoute les éléments de paragraphe au conteneur du résultat
+  // Ajoute les éléments créés au conteneur de résultat
   resultElement.appendChild(titleElement);
   resultElement.appendChild(genreElement);
   resultElement.appendChild(summaryElement);
 
-  // Utilise la fonction typeWriter pour afficher progressivement le texte du titre, du genre et du résumé
+  // Applique l'effet de machine à écrire aux différents textes
   typeWriter(document.getElementById("titleText"), title, speed, () => {
     typeWriter(document.getElementById("genreText"), genre, speed, () => {
       typeWriter(document.getElementById("summaryText"), summary, speed);
@@ -86,46 +78,47 @@ function displayFormattedResult(title, genre, summary, speed) {
   });
 }
 
-// Fonction pour afficher le texte caractère par caractère (effet machine à écrire)
+// Fonction pour créer l'effet de machine à écrire
 function typeWriter(element, text, speed, callback) {
   let i = 0;
 
+  // Fonction interne pour ajouter progressivement chaque caractère au texte de l'élément
   function type() {
     if (i < text.length) {
-      // Ajoute un caractère au contenu de l'élément
       element.innerHTML += text.charAt(i);
       i++;
-      // Appelle la fonction type après un délai défini par speed
       setTimeout(type, speed);
     } else if (callback) {
-      // Appelle la fonction de rappel si elle est définie
-      callback();
+      callback(); // Appelle le callback une fois l'animation terminée
     }
   }
 
-  type(); // Démarre l'animation de typewriter
+  type(); // Démarre l'animation de machine à écrire
 }
 
-// Fonction pour télécharger le résultat au format JSON
+// Fonction pour télécharger le résultat sous forme de fichier .txt
 function downloadResult(data) {
-  const now = new Date();
-  const timestamp = now.toLocaleString(); // Récupère la date et l'heure actuelle
+  const now = new Date(); // Récupère la date et l'heure actuelles
+  const timestamp = now.toLocaleString(); // Formate la date et l'heure en chaîne de caractères
   const content = {
     Timestamp: timestamp,
     Titre: data.title,
     Genre: data.genre,
     Résumé: data.summary,
   };
-  // Crée un blob avec le contenu JSON
+
+  // Crée un blob à partir du contenu JSON formaté
   const blob = new Blob([JSON.stringify(content, null, 2)], {
     type: "application/json",
   });
-  const url = URL.createObjectURL(blob); // Crée une URL pour le blob
+
+  // Crée une URL pour le blob et déclenche le téléchargement du fichier
+  const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "result.txt"; // Définit le nom du fichier à télécharger
+  a.download = "result.txt";
   document.body.appendChild(a);
-  a.click(); // Simule un clic pour déclencher le téléchargement
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url); // Révoque l'URL pour libérer la mémoire
+  a.click(); // Simule un clic pour démarrer le téléchargement
+  document.body.removeChild(a); // Supprime le lien du DOM
+  URL.revokeObjectURL(url); // Libère l'URL créée
 }
